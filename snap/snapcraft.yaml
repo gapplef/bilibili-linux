@@ -22,11 +22,17 @@ parts:
     override-build: |
       npm install asar -g
       npm install
+      tools/setup-bilibili
       mkdir -p tmp/build
       tools/build-prepare.sh
       asar e app/app.asar app/app
       npm run pkg-linux
       rm -rf tmp/build/linux-unpacked
+    build-snaps:
+      - node
+    build-packages:
+      - wget 
+      - exiftool
 
 apps:
   bilibili-linux:
