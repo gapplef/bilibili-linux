@@ -1,0 +1,39 @@
+name: bilibili-linux
+base: core22
+version: git
+summary: Unoffical Bilibili for Linux
+description: |
+  Unoffical Bilibili client for linux based on offical release.
+
+grade: stable
+confinement: strict
+license: GPL-3.0+
+
+architectures:
+  - build-on: amd64
+    build-for: amd64
+#   - build-on: amd64
+#     build-for: arm64
+
+parts:
+  bilibili-linux:
+    plugin: nil
+    source: .
+    override-build: |
+      sudo npm install asar -g
+      npm install
+      mkdir -p tmp/build
+      tools/build-prepare.sh
+      asar e app/app.asar app/app
+      npm run pkg-linux
+      rm -rf tmp/build/linux-unpacked
+    build-packages:
+      - git
+
+apps:
+  bilibili-linux:
+    command: usr/bin/bilibili
+    extensions: [ gnome ]
+    plugs:
+      - network
+      - home
