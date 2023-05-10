@@ -347,14 +347,11 @@ jobs:
         with:
           submodules: 'recursive'
 
-      - name: Prepare
-        run: cd compiler && npm install
-
       - name: Use Snapcraft
         uses: snapcore/action-build@v1
         id: build
 
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
           # Artifact name
